@@ -1,0 +1,161 @@
+{% extends "base.html" %} {% block title %}Blog {% endblock %}
+<!-- loginForm -->
+{% block loginForm %}
+<!-- if -->
+{% if current_user.firstname %}
+<li class="nav-item dropdown d-flex">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdown"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    Welcome,&nbsp;{{current_user.firstname}}
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+    <li>
+      <hr class="dropdown-divider" />
+    </li>
+    {% if current_user.category == 'buyer' %}
+    <li>
+      <a class="dropdown-item" href="/cart">My cart</a>
+    </li>
+    {% endif %}
+    <li>
+      <a class="dropdown-item" href="/logout">Logout</a>
+    </li>
+  </ul>
+</li>
+{% else %}
+<form class="d-flex" action="/login">
+  <button class="btn btn-primary" type="submit">Login</button>
+</form>
+{% endif %}
+<!-- end loginForm -->
+{% endblock %}
+<!-- content -->
+{% block content %}
+<style>
+  .cover {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),
+      url("{{blog[6]}}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60vh;
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .big-heading {
+    font-family: "Roboto", sans-serif;
+    color: white;
+  }
+
+  #main-parent-container {
+    padding: 0;
+  }
+</style>
+
+<!-- Custom styles for this template -->
+<link
+  href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&amp;display=swap"
+  rel="stylesheet"
+/>
+<div class="p-4 mb-4 p-xl-5 cover" style="overflow: hidden">
+  <div class="col-sm-6 col-sm-7 col-lg-5 px-0">
+    <h1 class="display-5 fst-italic big-heading">{{blog[2]}}</h1>
+    <p class="lead my-3 big-heading">{{blog[3][:100] + "..."}}</p>
+  </div>
+</div>
+<main class="container px-3">
+  <div class="row g-5">
+    <div class="col-md-8">
+      <br class="blog-post" />
+      <h3 class="blog-post-title">{{blog[2]}}</h3>
+      <p class="blog-post-meta">
+        {{blog[7].strftime("%B %d, %Y")}} by <a href="/">ecomart</a>
+      </p>
+      <p>{{blog[3]}}</p>
+      <hr />
+      <h3>{{blog[4]}}</h3>
+
+      {% for line in blog[5].splitlines() %}
+      <p class="mb-0">{{ line }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="col-md-4">
+      <div class="position-sticky" style="top: 2rem">
+        <div class="p-4 mb-3 bg-light rounded">
+          <h4 class="fst-italic">About</h4>
+          <p class="mb-0">
+            These are some of the blogs written by our content creation team.
+          </p>
+          <p>
+            If you’re interested in sharing your content, please share your
+            blog with us at
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=ecomart2021.india@gmail.com"
+              >ecomart2021.india@gmail.com</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+  .tb_button {
+    padding: 1px;
+    cursor: pointer;
+    border-right: 1px solid #8b8b8b;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
+  .tb_button.hover {
+    border: 2px outset #def;
+    background-color: #f8f8f8 !important;
+  }
+  .ws_toolbar {
+    z-index: 100000;
+  }
+  .ws_toolbar .ws_tb_btn {
+    cursor: pointer;
+    border: 1px solid #555;
+    padding: 3px;
+  }
+  .tb_highlight {
+    background-color: yellow;
+  }
+  .tb_hide {
+    visibility: hidden;
+  }
+  .ws_toolbar img {
+    padding: 2px;
+    margin: 0px;
+  }
+</style>
+
+<grammarly-desktop-integration
+  data-grammarly-shadow-root="true"
+></grammarly-desktop-integration>
+{% endblock %}

@@ -1,0 +1,255 @@
+{% extends "base.html" %} {% block title %}{{product[3]}}{% endblock %}
+
+<!-- LOGIN FORM -->
+{% block loginForm %} {% if current_user.firstname %}
+<li class="nav-item dropdown d-flex">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdown"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    Welcome,&nbsp;{{current_user.firstname}}
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+    <li>
+      <hr class="dropdown-divider" />
+    </li>
+    {% if current_user.category == 'buyer' %}
+    <li>
+      <a class="dropdown-item" href="/cart">My cart</a>
+    </li>
+    {% endif %}
+    <li>
+      <a class="dropdown-item" href="/logout">Logout</a>
+    </li>
+  </ul>
+</li>
+{% else %}
+<form class="d-flex" action="/login">
+  <button class="btn btn-primary" type="submit">Login</button>
+</form>
+{% endif %} {% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+<div class="container-fluid">
+  <div class="container-sm my-5">
+    <h1>{{product[3]}}</h1>
+    <hr />
+    <div class="media d-sm-flex">
+      <img
+        id="product-image"
+        class="img-thumbnail w-25 me-5 mb-4"
+        alt="product image"
+        src="{{url_for('static', filename=product[2][7:]) if product[2].startswith('static') else product[2]}}"
+      />
+      <div class="media-body w-100">
+        <h5 class="mt-0 d-flex align-items-center">
+          {{product[3]}}<span class="badge bg-primary ms-2"
+            >{{product[4]}}</span
+          >
+        </h5>
+
+        <p class="text-muted">
+          Sold by
+          <a href="/seller/{{seller[1]}}">{{seller[3]}} {{seller[4]}}</a>
+        </p>
+        {% if product[7] > 10 %}
+        <p class="text-success">In Stock</p>
+        {% else %}
+        <p class="text-danger fw-bolder">Only {{product[7]}} left!</p>
+        {% endif %}
+        <p>{{product[5]}}</p>
+        <hr />
+        <blockquote class="blockquote ms-4">
+          <p class="">M.R.P.: ₹{{product[6]}}</p>
+        </blockquote>
+        <hr />
+
+        <div class="accordion" id="pointsAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                Points
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              aria-labelledby="headingOne"
+              data-bs-parent="#pointsAccordion"
+            >
+              <div class="accordion-body">
+                <strong>You have {{current_user.points}} points!</strong>
+                <br />
+                You can use these to get a discount on the M.R.P.
+                <p class="mute">
+                  Points are used to get a discount on purchase and earned when
+                  purchasing products or giving away items to recycle.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% if current_user.category == "buyer" or current_user.category !=
+        "seller" %}
+        <div class="d-flex my-3 justify-content-end">
+          <form action="/addToCart/{{product[0]}}" method="POST">
+            <div class="flex-nowrap justify-content-end input-group">
+              <button
+                type="button"
+                id="minus-button"
+                style="max-width: 40px"
+                class="disabled btn btn-primary"
+                onclick="onMinusClick()"
+              >
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <input
+                id="quantity-input"
+                type="number"
+                value="1"
+                onchange="onInputChange(event)"
+                onkeydown="onInputKeyDown(event)"
+                class="form-control text-center"
+                name="quantity"
+                aria-label="Quantity"
+                style="max-width: 60px"
+              />
+              <button
+                type="button"
+                class="btn btn-primary"
+                style="max-width: 40px"
+                id="plus-button"
+                onclick="onPlusClick()"
+              >
+                <i class="bi bi-plus-lg"></i>
+              </button>
+            </div>
+            <hr />
+
+            <button
+              class="btn btn-outline-primary me-2"
+              formaction="/addToCart/{{product[0]}}"
+              method="POST"
+              type="submit"
+            >
+              Add to Cart<i class="bi bi-cart me-2 d-none d-sm-inline"></i>
+            </button>
+
+            <button
+              class="btn btn-success"
+              type="submit"
+              formaction="/buynow/{{product[0]}}"
+              method="POST"
+            >
+              Buy Now<i class="bi bi-arrow-right d-none d-sm-inline ms-2"></i>
+            </button>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  @media only screen and (max-width: 576px) {
+    #product-image {
+      width: 60% !important;
+      margin: 0 auto !important;
+      margin-bottom: 1rem !important;
+      display: block !important;
+    }
+  }
+
+  @media only screen and (min-width: 576px) {
+    #product-image {
+      width: 40% !important;
+      margin-bottom: auto !important;
+    }
+  }
+</style>
+<script>
+  const product = {{product|tojson}};
+  console.log(product);
+  const maxQuantity = product[7];
+
+  function onMinusClick(productPrice) {
+    let thatInput = document.getElementById("quantity-input");
+    let minusButton = document.getElementById("minus-button");
+    let plusButton = document.getElementById("plus-button");
+
+    if (Number(thatInput.value) > 1) {
+      thatInput.value--;
+      plusButton.classList.remove("disabled");
+      if (Number(thatInput.value) <= 1) {
+        minusButton.classList.add("disabled");
+      }
+    }
+  }
+
+  function onPlusClick(buttonId, productPrice) {
+    let thatInput = document.getElementById("quantity-input");
+    let plusButton = document.getElementById("plus-button");
+    let minusButton = document.getElementById("minus-button");
+
+
+    if (Number(thatInput.value) < Number(maxQuantity)) {
+      thatInput.value++;
+      minusButton.classList.remove("disabled");
+      if (Number(thatInput.value) >= Number(maxQuantity)) {
+        plusButton.classList.add("disabled");
+      }
+    }
+  }
+
+
+  function onInputChange(event) {
+    let inp = event.target;
+
+    if (Number(inp.value) >= maxQuantity) {
+      inp.value = maxQuantity;
+      inp.previousElementSibling.classList.remove("disabled");
+      inp.nextElementSibling.classList.add("disabled");
+    } else if (Number(inp.value) <= 0) {
+      inp.value = 1;
+      inp.previousElementSibling.classList.add("disabled");
+      inp.nextElementSibling.classList.remove("disabled");
+    } else {
+      inp.previousElementSibling.classList.remove("disabled");
+      inp.nextElementSibling.classList.remove("disabled");
+    }
+  }
+
+  function onInputKeyDown(event) {
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      event.stopPropagation();
+      onInputChange(event);
+    }
+  }
+</script>
+{% endblock %}

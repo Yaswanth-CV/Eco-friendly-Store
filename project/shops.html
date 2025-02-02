@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shops List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        header {
+            background-color: #ffffff;
+            border-bottom: 3px solid #ddd;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-right: 100px;
+        }
+        
+        nav ul li a {
+            font-size: 25px;
+            text-decoration: none;
+            color: #000000;
+            font-weight: bold;
+            padding: 8px 20px;
+            border-radius: 5px; 
+        }
+        
+        nav ul li a:hover {
+            color: #0e4f00; 
+            box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo img{
+            width: 140px;
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .shop {
+            width: 400px;
+            height: 400px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .shop:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .shop img {
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+        }
+
+        .shop-details {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            border: 3px dashed #ddd;
+            border-radius: 5px;
+            margin: 60px;
+        }
+        .view-shop-button{
+            margin: 20px;
+            padding: 5px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border: 2px solid #0f0f0f;
+            background-color: #000000;
+            color: #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            
+        }
+
+        .back-button {
+            display: none;
+            margin: 20px auto;
+            padding: 10px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-color: #0e4f00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 200px; 
+            text-align: center;
+        }
+        
+        .back-button:hover {
+            background-color: #066300;
+        }
+        
+
+        p {
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 30px;
+            margin: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="shops.html">Shops List</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="shop" id="shop1" onclick="showDetails('shop1')">
+            <img src="shop-1.jpg" alt="Shop 1">
+            <p>Shop 1</p>
+        </div>
+        <div class="shop" id="shop2" onclick="showDetails('shop2')">
+            <img src="shop-2.jpg" alt="Shop 2">
+            <p>Shop 2</p>
+        </div>
+        <div class="shop" id="shop3" onclick="showDetails('shop3')">
+            <img src="shop-3.jpg" alt="Shop 3">
+            <p>Shop 3</p>
+        </div>
+    </div>
+
+    <div class="shop-details" id="shop1-details">
+        <h2>Shop 1 Details</h2>
+        <p>Shop 1 offers a variety of eco-friendly products including reusable bags, biodegradable utensils, and more.</p>
+        <p><strong>Address:</strong> 789 Earth Rd, Sustain Village, SV 78901</p>
+        <a class="view-shop-button" href="shop_1.html">View Shop</a>
+    </div>
+    
+    <div class="shop-details" id="shop2-details">
+        <h2>Shop 2 Details</h2>
+        <p>Shop 2 specializes in organic food items, including fruits, vegetables, and locally-sourced products.</p>
+        <p><strong>Address:</strong> 789 Earth Rd, Sustain Village, SV 78901</p>
+        <a class="view-shop-button" href="shop_1.html">View Shop</a>
+    </div>
+    
+    <div class="shop-details" id="shop_3-details">
+        <h2>Shop 3 Details</h2>
+        <p>Shop 3 provides a wide range of eco-friendly clothing, from recycled materials to sustainable fashion brands.</p>
+        <p><strong>Address:</strong> 789 Earth Rd, Sustain Village, SV 78901</p>
+        <a class="view-shop-button" href="shop1.html">View Shop</a>
+    </div>
+
+    <button class="back-button" onclick="goBack()">Back to Shops</button>
+
+    <script>
+        function showDetails(shopId) {
+            // Hide all shops
+            document.querySelector('.container').style.display = 'none';
+
+            // Hide all shop details
+            const allDetails = document.querySelectorAll('.shop-details');
+            allDetails.forEach(detail => detail.style.display = 'none');
+
+            // Show the clicked shop's details
+            document.getElementById(`${shopId}-details`).style.display = 'block';
+            
+            // Show back button
+            document.querySelector('.back-button').style.display = 'block';
+        }
+
+        function goBack() {
+            // Hide all shop details
+            const allDetails = document.querySelectorAll('.shop-details');
+            allDetails.forEach(detail => detail.style.display = 'none');
+
+            // Show the shops container again
+            document.querySelector('.container').style.display = 'flex';
+
+            // Hide back button
+            document.querySelector('.back-button').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

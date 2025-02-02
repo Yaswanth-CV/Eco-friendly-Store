@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 95%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn {
+            width: 40%;
+            margin-left: 30%;
+            padding: 10px;
+            background-color: #028126;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <span class="error" id="usernameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error" id="passwordError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="error" id="confirmPasswordError"></span>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            // Prevent form from submitting the usual way
+            event.preventDefault();
+            
+            // Clear previous errors
+            document.getElementById('usernameError').textContent = "";
+            document.getElementById('emailError').textContent = "";
+            document.getElementById('passwordError').textContent = "";
+            document.getElementById('confirmPasswordError').textContent = "";
+        
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+            var isValid = true;
+        
+            // Username validation
+            if (username.length < 3) {
+                document.getElementById('usernameError').textContent = "Username must be at least 3 characters.";
+                isValid = false;
+            }
+        
+            // Email validation
+            var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById('emailError').textContent = "Please enter a valid email.";
+                isValid = false;
+            }
+        
+            // Password validation - must contain at least one capital letter, one symbol, and one number
+            var passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/;
+            if (!passwordPattern.test(password)) {
+                document.getElementById('passwordError').textContent = "Password must be at least 6 characters long, contain a capital letter, a symbol, and a number.";
+                isValid = false;
+            }
+        
+            // Confirm password validation
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = "Passwords do not match.";
+                isValid = false;
+            }
+        
+            // If all validations pass, show alert and then redirect
+            if (isValid) {
+                window.location.href = "home.html"; // Redirect to shop page after registration
+            }
+        }
+
+        // Attach event listener to the form
+        document.getElementById('registrationForm').addEventListener('submit', validateForm);
+    </script>
+</body>
+</html>

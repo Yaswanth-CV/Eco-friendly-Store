@@ -1,0 +1,143 @@
+{% extends "base.html" %} {% block title %}Billing | {% endblock %} {% block
+loginForm %}
+<form class="d-flex" action="/logout">
+  <button class="btn btn-primary" type="submit">Logout</button>
+</form>
+{% endblock %} {% block content %}
+
+<style>
+  #heading {
+    font-size: 10vh;
+  }
+  .jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
+    margin-top: 2rem;
+    padding-bottom: 0;
+    padding-top: 8vh;
+  }
+</style>
+
+<div class="container">
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-md-6 col-10 p-4">
+        <div class="row">
+          <h1 id="heading">Billing Page</h1>
+        </div>
+        <div class="row pt-4">
+          <!-- todo: updating users's points -->
+          <!-- user has enough points -->
+          {% if total_points <= current_user.points %}
+          <!--  -->
+          {% set remaining_points = current_user.points - total_points %}
+          <h5>Points remaining : {{ remaining_points }}</h5>
+          <!-- user has less points -->
+          {% else %} {% set total_points = 0 %} {% set remaining_points =
+          current_user.points %}
+          <h5>Points remaining : {{ remaining_points }}</h5>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-3 col-10 offset-2">
+        <table class="table">
+          <caption>
+            <span class="badge badge-pill badge-info">Discount</span>
+          </caption>
+          <thead>
+            <tr>
+              <td scope="col">Total Price</td>
+              <td scope="col">{{total_price}}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Points used</td>
+              {# set total_points= products[0][8] * quantity #}
+
+              <td>{{ total_points }}</td>
+            </tr>
+            <tr>
+              <th>Price to pay</th>
+              {% set final_price= total_price - total_points %}
+
+              <th>{{ final_price}}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-10">
+    <div class="row">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price per unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in (products) %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ product[1] }}</td>
+            <td>{{ product[4] }}</td>
+            <td>{{ product[5] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-end">
+      <!-- if user is buying cart items -->
+      {% if cart==True %}
+      <form action="/buyCart" method="POST">
+        <input
+          type="hidden"
+          name="remaining_points"
+          value="{{ remaining_points }}"
+        />
+
+        <input
+          type="hidden"
+          name="user_emailid"
+          value="{{ current_user.emailid }}"
+        />
+
+        <button type="submit" class="btn btn-success mb-4">
+          Proceed to buy
+        </button>
+      </form>
+      {% else %}
+      <!-- if user is buying a single product  -->
+      <form action="/buy" method="post">
+        <input type="hidden" name="product_id" value="{{products[0][0]}}" />
+        <input type="hidden" name="price" value="{{total_price}}" />
+        <input type="hidden" name="quantity" value="{{ products[0][4] }}" />
+        <input
+          type="hidden"
+          name="remaining_points"
+          value="{{ remaining_points }}"
+        />
+
+        <input
+          type="hidden"
+          name="user_emailid"
+          value="{{ current_user.emailid }}"
+        />
+
+        <button type="submit" class="btn btn-success mb-4">
+          Proceed to buy
+        </button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

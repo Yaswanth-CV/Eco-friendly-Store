@@ -1,0 +1,123 @@
+{% extends "base.html" %} {% block title %}Update{% endblock %} {% block
+loginForm %}
+<form class="d-flex" action="/logout">
+  <button class="btn btn-primary" type="submit">Logout</button>
+</form>
+{% endblock %} {% with messages = get_flashed_messages() %} {% if messages %}
+<ul class="flashes">
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {% endwith %} {% block content %}
+<div class="container py-4" style="max-width: 580px">
+  <h2 class="mb-4">Update</h2>
+  <form action="/update/{{product[0]}}" method="POST" id="signup_form">
+    <!-- action="/update/{{product[0]['PRODUCT_ID']}}" -->
+    <!-- NAME -->
+    <div class="mb-3">
+      <div class="row gx-3">
+        <div class="col">
+          <div class="form-floating">
+            <input required="true" name="productname" type="text"
+            value="{{product[3]}}" autocomplete="name" class="form-control"
+            id="firstName" placeholder="Product Name" " />
+            <!-- aria-describedby="Product Name -->
+            <label for="productname" class="form-label">Product Name</label>
+          </div>
+        </div>
+        <!-- category -->
+        <div class="col">
+          <div class="mb-3 form-floating">
+            <select
+              class="form-select"
+              aria-label="Category"
+              id="category"
+              name="category"
+              selected="{{product[4]}}"
+              
+            >
+              <option value="Artifacts" {{ "selected" if (product[4] =='Artifacts') else none  }}>Artifacts</option>
+              <option value="Furnitures" {{"selected" if (product[4] =='Furnitures') else none  }}>Furnitures</option>
+              <option value="Clothes" {{"selected" if product[4] =="Clothes" else none}}>Clothes</option>
+              <option value="Bags" {{ "selected" if (product[4] =='Bags') else none  }}>Bags</option>
+            </select>
+            <label for="category" class="form-label">category</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- description -->
+    <div class="mb-3 form-floating">
+      <input
+        required="true"
+        type="text"
+        value="{{product[5]}}"
+        name="description"
+        class="form-control"
+        id="description"
+        placeholder="Description"
+      />
+      <label for="description" class="form-label">Description</label>
+    </div>
+
+    <!-- price and quantity -->
+    <div class="mb-3">
+      <div class="row gx-3">
+        <!-- price -->
+        <div class="col">
+          <div class="form-floating">
+            <input
+              required="true"
+              name="price"
+              value="{{product[6]}}"
+              type="text"
+              autocomplete="price"
+              class="form-control"
+              id="price"
+              placeholder="price"
+              aria-describedby="price"
+            />
+            <label for="price" class="form-label">Price</label>
+          </div>
+        </div>
+        <!-- quantity -->
+        <div class="col">
+          <div class="form-floating">
+            <input
+              required="true"
+              type="text"
+              name="quantity"
+              value="{{product[7]}}"
+              autocomplete="family-name"
+              class="form-control"
+              id="quantity"
+              placeholder="quantity"
+              aria-describedby="quantity"
+            />
+            <label for="quantity" class="form-label">Quantity</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- image url -->
+    <div class="mb-3 form-floating">
+      <input
+        required="true"
+        type="text"
+        name="image_url"
+        value="{{product[2]}}"
+        class="form-control"
+        id="image_url"
+        placeholder="image_url"
+      />
+      <label for="image_url" class="form-label">Image url</label>
+    </div>
+    <div class="d-flex justify-content-end mb-3">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

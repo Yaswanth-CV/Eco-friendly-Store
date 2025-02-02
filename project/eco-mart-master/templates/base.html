@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='coca-leaves.png') }}"
+      type="image/x-icon"
+    />
+    {% block head %}
+    <title>{% block title %}{% endblock %} - Eco-Mart</title>
+    {% endblock %}
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial;
+      }
+
+      .header {
+        text-align: center;
+        padding: 32px;
+      }
+
+      .row {
+        display: -ms-flexbox; /* IE10 */
+        display: flex;
+        -ms-flex-wrap: wrap; /* IE10 */
+        flex-wrap: wrap;
+        padding: 0 4px;
+      }
+
+      /* Create four equal columns that sits next to each other */
+      .column {
+        -ms-flex: 25%; /* IE10 */
+        flex: 25%;
+        max-width: 25%;
+        padding: 0 4px;
+      }
+
+      .column img {
+        margin-top: 8px;
+        vertical-align: middle;
+        width: 100%;
+      }
+
+      /* Responsive layout - makes a two column-layout instead of four columns */
+      @media screen and (max-width: 800px) {
+        .column {
+          -ms-flex: 50%;
+          flex: 50%;
+          max-width: 50%;
+        }
+      }
+
+      /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+      @media screen and (max-width: 600px) {
+        .column {
+          -ms-flex: 100%;
+          flex: 100%;
+          max-width: 100%;
+        }
+      }
+
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+      }
+
+      .price {
+        color: grey;
+        font-size: 22px;
+      }
+
+      .productCard button {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+      }
+
+      /* .card button:hover {
+        opacity: 0.7;
+      } */
+    </style>
+  </head>
+  <body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    {% block navbar %}
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand align-items-center d-flex" href="/">
+          <img
+            src="{{ url_for('static', filename='coca-leaves.png') }}"
+            alt="logo"
+            width="23"
+            height="23"
+            class="me-2"
+          />
+          Eco Mart
+        </a>
+        <!-- Cart Icon with badge for sm screens-->
+        {% if current_user and current_user.is_authenticated %}
+        <form action="/cart" class="me-3 d-sm-none ms-auto">
+          <button
+            type="submit"
+            class="btn p-0 pe-1 btn-outline-light text-dark position-relative"
+          >
+            <i class="bi-cart pointer-event fs-5"></i>
+            <span
+              class="
+                position-absolute
+                top-0
+                start-100
+                translate-middle
+                badge
+                rounded-pill
+                bg-danger
+              "
+            >
+              {{ session['cart'] or 0}}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </button>
+        </form>
+        {% endif %}
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/"
+                >Products</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/eco-friendly-business"
+                >Eco Friendly Business</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/blogs" tabindex="-1">Blogs</a>
+            </li>
+          </ul>
+          <!-- Cart Icon with badge -->
+          {% if current_user.category == 'buyer' and
+          current_user.is_authenticated %}
+          <form action="/cart" class="me-3">
+            <button
+              type="submit"
+              class="btn p-0 pe-1 btn-outline-light text-dark position-relative"
+            >
+              <i class="bi-cart pointer-event fs-5"></i>
+              <span
+                class="
+                  position-absolute
+                  top-0
+                  start-100
+                  translate-middle
+                  badge
+                  rounded-pill
+                  bg-danger
+                "
+              >
+                {{ session['cart'] or 0}}
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </button>
+          </form>
+          {% endif %}
+          <!-- Login Form -->
+          {% block loginForm %}
+          <form class="d-flex" action="/signup">
+            <button class="btn btn-primary" type="submit">Login</button>
+          </form>
+          {% endblock %}
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+    <!-- END-NAVBAR -->
+    <div class="container-fluid" id="main-parent-container">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- FOOTER -->
+    {% block footer %}
+    <footer class="bg-light">
+      <div class="container-fluid py-4">
+        <span
+          class="mb-4 flex-row d-flex align-items-center justify-content-center"
+        >
+          <img
+            src="{{ url_for('static', filename='coca-leaves.png') }}"
+            alt="logo"
+            width="25"
+            height="25"
+            class="m-1 me-2"
+          />
+          <span class="fs-2">Eco Mart</span>
+        </span>
+        <div class="">
+          <ol class="breadcrumb justify-content-center">
+            <li class="breadcrumb-item"><a href="#">Yash</a></li>
+            <li class="breadcrumb-item"><a href="#">Chai</a></li>
+            <li class="breadcrumb-item"><a href="#">Neha</a></li>
+            <li class="breadcrumb-item"><a href="#">Mahima</a></li>
+            <li class="breadcrumb-item"><a href="#">Arshad</a></li>
+          </ol>
+          <br />
+          <!-- <div class="text-center">
+            Icons made by&nbsp;
+            <a href="https://www.freepik.com" title="Freepik">Freepik</a>
+            &nbsp;from&nbsp;
+            <a href="https://www.flaticon.com/" title="Flaticon"
+              >www.flaticon.com</a
+            >
+          </div> -->
+        </div>
+      </div>
+    </footer>
+    {% endblock %}
+    <!-- END-FOOTER -->
+  </body>
+</html>

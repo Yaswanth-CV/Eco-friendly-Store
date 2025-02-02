@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Friendly Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        header {
+            background-color: #ffffff;
+            border-bottom: 3px solid #ddd;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-right: 100px;
+        }
+        
+        nav ul li a {
+            font-size: 25px;
+            text-decoration: none;
+            color: #000000;
+            font-weight: bold;
+            padding: 8px 20px;
+            border-radius: 5px; 
+        }
+        nav ul li a:hover {
+            color: #0e4f00; 
+            box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo img{
+            width: 140px;
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+        #main {
+            background-image: url("front.jpg");
+            background-position: right center;
+            background-repeat: no-repeat;
+            background-size: 45% 90%;
+            height: 90vh;
+            width: 90%;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            padding: 0 90px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+
+            background-color: rgb(255, 255, 255);
+          }
+          
+          #main h4 {
+            padding-bottom: 15px;
+            font-size: 40px;
+          }
+          #main h2{
+            color: brown;
+            padding-bottom: 15px;
+            font-size: 60px;
+          }
+          #main h1 {
+            color: #088178;
+            padding-bottom: 15px;
+            font-size: 80px;
+          }
+          
+          #main button {
+            background-image: url("btn_background.png");
+            background-color: transparent;
+            color: #141111;
+            border: 0;
+            padding: 14px 65px;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+
+            border-radius: 100px;
+          }
+          .slideshow-container {
+            display: flex;
+            max-width: 100%;
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .slides {
+            display: none;
+            width: 50%; /* Adjusts the width of the image section */
+        }
+
+        .slideshow-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 500px;
+            margin-left: 10px;
+        }
+
+        .content-container {
+            width: 50%; /* Adjusts the width of the content section */
+            padding: 20px;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            
+        }
+
+        .content-container h1 {
+            color: #07aea3;
+        }
+
+        .content-container h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .content-container p {
+            margin-top: 10px;
+            color: #555;
+        }
+        .slider-container {
+            width: 80%;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .slider-container h3{
+            font-size: 20px;
+        }
+        .slider-container p{
+            font-size: 20px;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+        }
+        
+        .product {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        
+        .product img {
+            width: 500px;
+            height: 500px;
+            border-radius: 20px;
+        }
+        .product-slider{
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            padding: 100px;
+            text-align: center;
+        }
+        .product-slider h3{
+            padding: 10px;
+        }
+        .product-slider p{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            padding: 10px;
+            
+        }
+        
+        button {
+            margin-top: 5px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+        }
+        .description {
+            text-align: center;
+            font-size: 25px;
+            color: #100f0f;
+        }
+        
+        .description strong {
+            color: #8d350c; /* Highlight important terms like Next and Previous */
+            font-size: 60px;
+        }
+        .description b{
+            color:green;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="shops.html">Shops List</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="main">
+        <h4>Sustainable Savings</h4>
+        <h2>Super value deals</h2>
+        <h1>On all products</h1>
+        <h3>Discover amazing discounts on our range of sustainable products and make a positive impact!</h3>
+        <br>
+        <a href="shops.html"><button class="btn">Shop Now</button></a>
+    </section>
+    <section class="slideshow-container">
+        <div class="slides">
+            <img src="slide-img-1.jpg" alt="image">
+        </div>
+        <div class="slides">
+            <img src="slide-img-2.jpg" alt="image">
+        </div>
+        <!-- Content Section -->
+        <div class="content-container">
+            <h1>Welcome to Earthly Goods - Naturally Better Choices for a Greener World</h1>
+            <h2>Why Earthly Goods?</h2>
+            <p>At Earthly Goods, we believe that making sustainable choices should be simple and accessible for everyone. Our mission is to offer thoughtfully curated products that are kind to both you and the planet. From ethically sourced fashion to eco-friendly household essentials, Earthly Goods brings you the best in sustainable living, without compromising on quality or style.</p>
+
+            <h2>Sustainably Sourced</h2>
+            <p>Every item in our store is selected with care, sourced from ethical brands that prioritize sustainable materials, fair trade practices, and eco-friendly production processes.</p>
+
+            <h2>Planet-Friendly Packaging</h2>
+            <p>We use only recyclable, compostable, or reusable packaging, ensuring that your shopping experience leaves the lightest footprint possible.</p>
+
+            <h2>Carbon-Conscious Delivery</h2>
+            <p>Through our carbon-neutral shipping program, we offset the environmental impact of delivering your order by supporting reforestation and clean energy initiatives.</p>
+            
+         </div>
+    </section>
+
+    <!--product slider-->
+    <section class="product-slider">
+        <div class="description">
+            <p><strong>Explore Our Trending Products</strong></p>
+            <p>This slider showcases a selection of trending eco-friendly products. Use the <b>Next</b> and <b>Previous</b> buttons to navigate through the products.</p>
+        </div>
+    <div class="slider-container">
+        <div class="slider" id="productSlider">
+            <div class="product">
+                <img src="shop1-p12.jpg" alt="Product 1">
+                <h3>Happiness Gift Bundle - Vegan | Zero Waste</h3>
+                <p>₹130</p>
+            </div>
+            <div class="product">
+                <img src="shop1-p3.jpeg" alt="Product 2">
+                <h3>Not A Planner - Undated Planner</h3>
+                <p>₹169</p>
+            </div>
+            <div class="product">
+                <img src="shop1-p6.jpeg" alt="Product 3">
+                <h3>Perfect Essentials Gift Hamper</h3>
+                <p>₹169</p>
+            </div>
+            <div class="product">
+                <img src="shop1-p7.jpg" alt="Product 4">
+                <h3>Plant A Tree - Get an eTreeCertificate</h3>
+                <p>₹99</p>
+            </div>
+            <div class="product">
+                <img src="shop1-p10.jpg" alt="Product 5">
+                <h3>Recycled Copier Paper</h3>
+                <p>₹50</p>
+            </div>
+            <div class="product">
+                <img src="shop1-p11.jpeg" alt="Product 6">
+                <h3>Water Activated Plain Paper Tape</h3>
+                <p>From ₹99</p>
+            </div>
+        </div>
+    </div>
+
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+</section>
+</body>
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("slides");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }    
+        slides[slideIndex-1].style.display = "block";  
+        setTimeout(showSlides, 3000); // Change image every 3 seconds
+    }
+
+    //product slider
+    const slider = document.getElementById('productSlider');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentIndex = 0;
+
+prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+    }
+});
+
+nextBtn.addEventListener('click', () => {
+    if (currentIndex < slider.children.length - 1) {
+        currentIndex++;
+        updateSlider();
+    }
+});
+
+function updateSlider() {
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === slider.children.length - 1;
+}
+
+</script>
+</html>

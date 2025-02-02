@@ -1,0 +1,325 @@
+{% extends "base.html" %} {% block title %}Signup{% endblock %} {% block content
+%} {% block loginForm %} {% endblock %}
+<div class="container py-4" style="max-width: 580px">
+  <h2 class="mb-4">Sign Up</h2>
+  <form
+    action="/signup"
+    method="POST"
+    id="signup_form"
+    onsubmit="return validation()"
+  >
+    <!-- NAME -->
+    <div class="mb-3">
+      <div class="row gx-3">
+        <div class="col">
+          <div class="form-floating">
+            <input
+              required="true"
+              name="firstname"
+              type="text"
+              autocomplete="name"
+              class="form-control"
+              id="firstName"
+              placeholder="First Name"
+              aria-describedby="first name"
+            />
+            <label for="firstName" class="form-label">First Name</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <input
+              required="true"
+              type="text"
+              name="lastname"
+              autocomplete="family-name"
+              class="form-control"
+              id="lastName"
+              placeholder="Last Name"
+              aria-describedby="last name"
+            />
+            <label for="lastName" class="form-label">Last Name</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- error messge first n last -->
+    <div class="mb-3">
+      <div class="row gx-3">
+        <div class="col">
+          <div class="form-floating" id="firstName_error" style="display: none">
+            First name should have more than 2 characters
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating" id="lastName_error" style="display: none">
+            Last name should have more than 2 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- EMAIL -->
+    <div class="mb-3 form-floating">
+      <input
+        required="true"
+        type="email"
+        name="emailid"
+        class="form-control"
+        autocomplete="email"
+        id="inputEmail"
+        placeholder="name@example.com"
+        aria-describedby="emailHelp"
+      />
+      <label for="inputEmail" class="form-label">Email address</label>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="mb-3">
+      <div class="row gx-3">
+        <div class="col">
+          <div class="form-floating">
+            <input
+              required="true"
+              type="password"
+              name="password"
+              class="form-control"
+              id="Password1"
+              placeholder="Password"
+            />
+            <label for="Password1" class="form-label">Password</label>
+          </div>
+        </div>
+        <!--CONFIRM PASSWORD -->
+        <div class="col">
+          <div class="form-floating">
+            <input
+              required="true"
+              type="password"
+              name="password"
+              class="form-control"
+              id="Password2"
+              placeholder="Confirm Password"
+            />
+            <label for="Password2" class="form-label">Confirm Password</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-3">
+      <div class="col">
+        <!-- ACCOUNT TYPE -->
+        <div class="mb-3 form-floating">
+          <select
+            class="form-select"
+            id="category"
+            aria-label="Account Type"
+            name="category"
+          >
+            <option value="seller">Seller</option>
+            <option selected value="buyer">Buyer</option>
+            <!-- <option value="Admin">Admin</option> -->
+          </select>
+          <label for="accountType" class="form-label">Account Type</label>
+        </div>
+      </div>
+
+      <div class="col">
+        <!-- PHONE NUMBER -->
+        <div class="mb-3 form-floating">
+          <input
+            required="true"
+            type="text"
+            name="contact_no"
+            autocomplete="tel"
+            class="form-control"
+            id="phoneNumber"
+            placeholder="Phone Number"
+          />
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seller's section -->
+    <div id="sellers_section">
+      <div class="mb-3 form-floating">
+        <div>
+          <label class="form-label" for="description">Description : </label>
+          <textarea
+            rows="8"
+            name="description"
+            cols="100"
+            class="form-control"
+            placeholder="Your company's description"
+          ></textarea>
+        </div>
+      </div>
+      <div class="mb-3 form-floating">
+        <input
+          type="text"
+          name="company_url"
+          class="form-control"
+          autocomplete="text"
+          id="company_url"
+          placeholder="Your website url"
+        />
+        <label for="company_url" class="form-label">Your website url </label>
+      </div>
+      <div class="mb-3 form-floating">
+        <input
+          type="text"
+          name="image_url"
+          class="form-control"
+          autocomplete="text"
+          id="image_url"
+          placeholder="Your image url"
+        />
+        <label for="image_url" class="form-label">Your image url </label>
+      </div>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="mb-3 form-floating">
+      <input
+        required="true"
+        type="text"
+        name="address"
+        class="form-control"
+        id="address"
+        placeholder="Password"
+      />
+      <label for="address" class="form-label">Address</label>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{error}}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endif %}
+    <div
+      class="mb-3 form-check d-flex align-content-center justify-content-end"
+    >
+      <a href="/login" class="link-primary">Login instead?</a>
+    </div>
+    <div
+      class="mb-3 form-check d-flex align-content-center justify-content-end"
+    >
+      <input
+        checked
+        type="checkbox"
+        class="form-check-input"
+        id="remember"
+        name="remember"
+      />
+      <label class="form-check-label ms-2" for="remember"
+        >Keep me signed in</label
+      >
+    </div>
+    <div class="d-flex justify-content-end mb-3">
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+    <input
+      name="next"
+      type="hidden"
+      value="{{ url_for(request.args.get('next') or 'index') }}"
+    />
+  </form>
+</div>
+<script>
+  $("#category").change(function () {
+    if ($(this).val() == "seller") {
+      $("#sellers_section").show();
+      console.log("seller");
+    } else {
+      $("#sellers_section").hide();
+      console.log("buyer");
+    }
+  });
+  $("#category").trigger("change");
+</script>
+{% endblock %}
+
+<script>
+  function validation() {
+    var fname = document.getElementById("firstName").value;
+    var lname = document.getElementById("lastName").value;
+    var emailid = document.getElementById("inputEmail").value;
+    var phoneNumber = document.getElementById("phoneNumber").value;
+    var password = document.getElementById("Password1").value;
+    var conpassword = document.getElementById("Password2").value;
+
+    //firstname
+
+    if (fname.length < 2) {
+      document.getElementById("firstName").style.borderColor = "red";
+      document.getElementById("firstName_error").style.display = "block";
+      return false;
+    } else {
+      document.getElementById("firstName").style.borderColor = "lightgrey";
+      document.getElementById("firstName_error").style.display = "none";
+    }
+    //lastname
+    if (lname.length < 2) {
+      document.getElementById("lastName").style.borderColor = "red";
+      document.getElementById("lastName_error").style.display = "block";
+      return false;
+    } else {
+      document.getElementById("lastName").style.borderColor = "lightgrey";
+      document.getElementById("lastName_error").style.display = "none";
+    }
+
+    //contact number
+    if (phoneNumber.length != 10) {
+      document.getElementById("phoneNumber").innerHTML =
+        "Enter a valid contact number";
+      return false;
+    }
+    //password
+    if (password == "") {
+      document.getElementById("Password1").innerHTML =
+        "Password can't be empty";
+      return false;
+    }
+    if (password.length < 6) {
+      document.getElementById("Password1").innerHTML =
+        "Password should be more than 8 characters";
+      return false;
+    }
+    if (password.search(/[0-9]/) == -1) {
+      document.getElementById("Password1").innerHTML =
+        "Password should contain atleast 1 number";
+      return false;
+    }
+    if (password.search(/[a-z]/) == -1) {
+      document.getElementById("password1").innerHTML =
+        "Password should contain atleast 1 lowercase character";
+      return false;
+    }
+    if (password.search(/[A-Z]/) == -1) {
+      document.getElementById("password1").innerHTML =
+        "Password should contain atleast 1 uppercase character";
+      return false;
+    }
+    if (password.search(/[@\!\$\%\^\&\(\)\_\-\+\=\<\>\?\.\#\,\*]/) == -1) {
+      document.getElementById("Password1").innerHTML =
+        "Password should contain atleast 1 special character";
+      return false;
+    } else {
+      document.getElementById("Password1").innerHTML = "";
+    }
+    //confirm password
+    if (conpassword != password) {
+      document.getElementById("Password2").innerHTML =
+        "Password isn't matching";
+      return false;
+    } else {
+      document.getElementById("Password2").innerHTML = "";
+    }
+  }
+</script>

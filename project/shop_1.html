@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Shop</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Light Gray */
+            color: #495057; /* Dark Gray */
+        }
+        header {
+            background-color: #6c757d; /* Slate Gray */
+            color: #f8f9fa; /* Light Gray */
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .product {
+            background-color: #ffffff; /* White */
+            border: 1px solid #dee2e6; /* Light Gray */
+            border-radius: 8px;
+            padding: 15px;
+            width: 240px;
+            margin: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .product:hover {
+            transform: translateY(-2px);
+        }
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product button {
+            background-color: #007bff; /* Blue */
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .product button:hover {
+            background-color: #0056b3; /* Darker Blue */
+        }
+        .cart {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff; /* White */
+            padding: 20px; /* Decreased padding */
+            border: 1px solid #dee2e6; /* Light Gray */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 240px; /* Decreased width */
+            max-height: 300px; /* Decreased max height */
+            overflow-y: auto;
+        }
+        
+        .cart h3 {
+            margin: 0 0 10px;
+            color: #007bff; /* Blue */
+        }
+        .cart-items {
+            margin-bottom: 10px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .cart-total {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: right;
+            color: #007bff; /* Blue */
+        }
+        .checkout-form {
+            display: none;
+            background-color: #ffffff; /* White */
+            padding: 30px; /* Increased padding */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #dee2e6; /* Light Gray */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+        .checkout-form h3 {
+            color: #007bff; /* Blue */
+            margin: 0 0 10px;
+        }
+        .checkout-form input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da; /* Gray */
+            border-radius: 4px;
+        }
+        .checkout-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745; /* Green */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .checkout-form button:hover {
+            background-color: #218838; /* Darker Green */
+        }
+        .payment-form h3 {
+            color: #007bff; /* Blue */
+        }
+        .payment-methods label {
+            color: #495057; /* Dark Gray */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Online Shop</h1>
+</header>
+
+<div class="container" id="product-list">
+    <!-- Products will be dynamically generated here -->
+</div>
+
+<div class="cart" id="cart">
+    <h3>Your Cart</h3>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: ₹0.00</div>
+    <button onclick="checkout()">Checkout</button>
+</div>
+
+<div class="checkout-form" id="checkout-form">
+    <h3>Checkout - Address</h3>
+    <input type="text" id="address" placeholder="Enter delivery address" required>
+    <button onclick="nextToPayment()">Next</button>
+</div>
+
+<div class="checkout-form" id="payment-form" style="display:none;">
+    <h3>Payment</h3>
+    <div class="payment-methods">
+        <label>
+            <input type="radio" name="payment-method" value="cash" required> Cash on Delivery
+        </label>
+    </div>
+    <button onclick="completePayment()">Complete Purchase</button>
+</div>
+
+<script>
+    const products = [
+        { id: 1, name: 'Product 1', price: 10, image: 'shop1-p1.jpeg' },
+        { id: 2, name: 'Product 2', price: 15, image: 'shop1-p12.jpg' },
+        { id: 3, name: 'Product 3', price: 20, image: 'shop1-p3.jpeg' },
+        { id: 4, name: 'Product 4', price: 25, image: 'shop1-p4.jpg' },
+        { id: 5, name: 'Product 5', price: 30, image: 'shop1-p5.jpg' },
+        { id: 6, name: 'Product 6', price: 35, image: 'shop1-p6.jpeg' },
+        { id: 7, name: 'Product 7', price: 40, image: 'shop1-p7.jpg' },
+        { id: 8, name: 'Product 8', price: 45, image: 'shop1-p8.jpg' },
+        { id: 9, name: 'Product 9', price: 50, image: 'shop1-p9.jpg' },
+        { id: 10, name: 'Product 10', price: 55, image: 'shop1-p10.jpg' }
+    ];
+
+    let cart = [];
+
+    function renderProducts() {
+        const productList = document.getElementById('product-list');
+        products.forEach(product => {
+            const productDiv = document.createElement('div');
+            productDiv.classList.add('product');
+            productDiv.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h4>${product.name}</h4>
+                <p>Price: ₹${product.price.toFixed(2)}</p>
+                <button onclick="addToCart(${product.id})">Add to Cart</button>
+            `;
+            productList.appendChild(productDiv);
+        });
+    }
+
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        cart.push(product);
+        renderCart();
+    }
+
+    function renderCart() {
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        cartItems.innerHTML = '';
+        let total = 0;
+        cart.forEach(item => {
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `<span>${item.name}</span><span>₹${item.price.toFixed(2)}</span>`;
+            cartItems.appendChild(cartItem);
+            total += item.price;
+        });
+        cartTotal.textContent = `Total: ₹${total.toFixed(2)}`;
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('Your cart is empty!');
+            return;
+        }
+        document.getElementById('checkout-form').style.display = 'block';
+    }
+
+    function nextToPayment() {
+        const address = document.getElementById('address').value;
+        if (address === '') {
+            alert('Please enter your address!');
+            return;
+        }
+        document.getElementById('checkout-form').style.display = 'none';
+        document.getElementById('payment-form').style.display = 'block';
+    }
+
+    function completePayment() {
+        const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+        if (!paymentMethod) {
+            alert('Please select a payment method!');
+            return;
+        }
+        alert('Thank you for your purchase!');
+        cart = [];
+        renderCart();
+        document.getElementById('payment-form').style.display = 'none';
+    }
+
+    renderProducts();
+</script>
+
+</body>
+</html>

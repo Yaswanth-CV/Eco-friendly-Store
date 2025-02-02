@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Eco-Friendly Marketplace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        header {
+            background-color: #ffffff;
+            border-bottom: 3px solid #ddd;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-right: 100px;
+        }
+        
+        nav ul li a {
+            font-size: 25px;
+            text-decoration: none;
+            color: #000000;
+            font-weight: bold;
+            padding: 8px 20px;
+            border-radius: 5px; 
+        }
+        nav ul li a:hover {
+            color: #0e4f00; 
+            box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo img{
+            width: 140px;
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+        
+        .front img{
+            width: 35%;
+            margin-left: 30% ;
+        }
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contact-container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        /* Contact Details Styles */
+        .contact-details {
+            margin-bottom: 30px;
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-left: 5px solid #4CAF50;
+            border-radius: 5px;
+        }
+
+        .contact-details h2 {
+            color: #2e7d32;
+        }
+
+        /* Form Styles */
+        .contact-form h2 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Message Display Styles */
+        .message-list {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e0f7fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-list h3 {
+            color: #004d40;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .message strong {
+            color: #004d40;
+        }
+
+        .message .delete-btn {
+            background-color: #e53935;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .message .delete-btn:hover {
+            background-color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="shops.html">Shops List</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        </header>
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you! If you have any questions, feedback, or would like more information, please reach out to us using the form below or through our contact details.</p>
+
+        <div class="contact-details">
+            <h2>Our Contact Information</h2>
+            <p><strong>Email:</strong> support@ecofriendlymarketplace.com</p>
+            <p><strong>Phone:</strong> +1 (123) 456-7890</p>
+            <p><strong>Address:</strong> IIIT Kottayam, Valavoor, Pala</p>
+        </div>
+
+        <div class="contact-form">
+            <h2>Send Us a Review</h2>
+            <form id="contactForm">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Your Review:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Send Review</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+       // JavaScript to handle message storage without displaying it on the page
+
+const contactForm = document.getElementById('contactForm');
+
+// Handle form submission
+contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get the form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    // Email validation to check if it ends with @gmail.com
+    if (!email.endsWith('@gmail.com')) {
+        alert('Please enter a valid Gmail address (must end with @gmail.com).');
+        return;
+    }
+
+    // Create a new message object
+    const newMessage = {
+        name: name,
+        email: email,
+        message: message
+    };
+
+    // Store the message in localStorage
+    storeMessage(newMessage);
+
+    // Reset the form
+    contactForm.reset();
+
+    alert('Message sent and stored successfully!');
+});
+
+// Function to store message in localStorage
+function storeMessage(message) {
+    const messages = JSON.parse(localStorage.getItem('messages')) || [];
+    messages.push(message);
+    localStorage.setItem('messages', JSON.stringify(messages));
+}
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block
+loginForm %} {% if current_user %} {% block head %}
+<link
+  rel="stylesheet"
+  href=" {{ url_for('static',filename='sidebars.css') }} "
+/>
+<style>
+  .float-container {
+    border: 3px solid #fff;
+    padding: 0px;
+  }
+
+  .float-child {
+    width: 20%;
+    float: left;
+    padding: 0px;
+  }
+
+  .desc {
+    position: relative;
+    line-height: 1.2em;
+    overflow: hidden;
+    height: 3.6em; /* exactly three lines */
+  }
+  .desc:after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 70%;
+    height: 1.2em;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 1) 50%
+    );
+  }
+</style>
+
+{% endblock %}
+
+<li class="nav-item dropdown d-flex">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdown"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    Welcome,&nbsp;{{current_user.firstname}}
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+    <li>
+      <hr class="dropdown-divider" />
+    </li>
+    {% if current_user.category == 'buyer' %}
+    <li>
+      <a class="dropdown-item" href="/cart">My cart</a>
+    </li>
+    {% endif %}
+    <li>
+      <a class="dropdown-item" href="/logout">Logout</a>
+    </li>
+  </ul>
+</li>
+{% else %}
+<form class="d-flex" action="/login">
+  <button class="btn btn-primary" type="submit">Login</button>
+</form>
+{% endif %} {% endblock %}
+<!-- content -->
+{% block content %}
+<!-- Showing modal on sign up -->
+{% with messages = get_flashed_messages() %}
+<!-- if -->
+{% if messages %}
+<!-- for -->
+{% for message in messages %}
+<!-- Vertically centered scrollable modal -->
+<div class="modal" id="welcomeModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eco Mart</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h2>Welcome, {{ current_user.firstname }}!</h2>
+        <p>Looks like you're new around here.</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<!-- endfor -->
+{% endif %}
+<!-- endwith -->
+{% endwith %}
+
+<div class="float-container d-none d-xs-block d-sm-block d-md-block">
+  <div class="float-child">
+    <div class="flex-shrink-0 p-3 bg-white" style="width: 80px">
+      <a
+        href="/"
+        class="
+          d-flex
+          align-items-center
+          pb-3
+          mb-3
+          link-dark
+          text-decoration-none
+          border-bottom
+        "
+      >
+        <svg class="bi me-2" width="30" height="24">
+          <use xlink:href="#bootstrap" />
+        </svg>
+        <span class="fs-5 fw-semibold">Actions</span>
+      </a>
+      <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+          <button
+            class="btn btn-toggle align-items-center rounded collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#home-collapse"
+            aria-expanded="true"
+          >
+            Products
+          </button>
+          <div class="collapse show" id="home-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li>
+                <a href="/Artifacts" class="link-dark rounded">Artifacts</a>
+              </li>
+              <li>
+                <a href="/Furnitures" class="link-dark rounded">Furnitures</a>
+              </li>
+              <li><a href="/Clothes" class="link-dark rounded">Clothes</a></li>
+              <li><a href="/Bags" class="link-dark rounded">Bags</a></li>
+              {% if current_user.category == "Admin"%}
+              <li>
+                <a href="/Recycling" class="link-dark rounded"
+                  >recycling products</a
+                >
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </li>
+        <!-- <li class="mb-1">
+          <button
+            class="btn btn-toggle align-items-center rounded collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#dashboard-collapse"
+            aria-expanded="false"
+          >
+            Dashboard
+          </button>
+          <div class="collapse" id="dashboard-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a href="products" class="link-dark rounded">Overview</a></li>
+              <li><a href="#" class="link-dark rounded">Weekly</a></li>
+              <li><a href="#" class="link-dark rounded">Monthly</a></li>
+              <li><a href="#" class="link-dark rounded">Annually</a></li>
+            </ul>
+          </div>
+        </li> -->
+        {% if current_user%} {% if current_user.category == 'buyer'%}
+        <li class="mb-1">
+          <button
+            class="btn btn-toggle align-items-center rounded collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#orders-collapse"
+            aria-expanded="false"
+          >
+            Orders
+          </button>
+          <div class="collapse" id="orders-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a href="#" class="link-dark rounded">New</a></li>
+              <li>
+                <a href="/dashboard" class="link-dark rounded">Processed</a>
+              </li>
+              <li><a href="#" class="link-dark rounded">Shipped</a></li>
+              <li><a href="#" class="link-dark rounded">Returned</a></li>
+            </ul>
+          </div>
+        </li>
+        {% endif %}
+        <li class="border-top my-3"></li>
+        <li class="mb-1">
+          <button
+            class="btn btn-toggle align-items-center rounded collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#account-collapse"
+            aria-expanded="false"
+          >
+            Account
+          </button>
+          <div class="collapse" id="account-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 medium">
+              <li><a href="/signup" class="link-dark rounded">New...</a></li>
+              <li>
+                <a href="/dashboard" class="link-dark rounded">Profile</a>
+              </li>
+              <!-- <li><a href="#" class="link-dark rounded">Settings</a></li> -->
+              <li><a href="/logout" class="link-dark rounded">LogOut</a></li>
+            </ul>
+          </div>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="row">
+    {%for i in products%}
+    <div
+      class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-6 my-4"
+      style="min-width: 16rem"
+    >
+      <div class="card productCard h-100">
+        <a
+          style="text-decoration: none; color: black"
+          class="p-3"
+          href="/products/{{i[0]}}/{{i[3]}}"
+        >
+          <img
+            src="{{i[2]}}"
+            style="max-height: 11rem; width: auto"
+            alt="image"
+            class="card-img-top"
+          />
+
+          <!-- TITLE -->
+          <h4 class="mt-2">{{i[3]}}</h4>
+          <!-- TYPE -->
+          <p><span class="badge bg-secondary">{{i[4]}}</span></p>
+          <!-- DESCRIPTION -->
+          <p class="desc mb-1" style="color: #555">{{i[5]}}</p>
+
+          {% if i[4] != 'Recycling' %}
+          <!-- INNER IF -->
+          {% if i[7] > 10 %}
+          <p class="text-success m-0">In Stock</p>
+          {% else %}
+          <p class="text-danger fw-bolder m-0">Only {{i[7]}} left!</p>
+          {% endif %}
+          <p style="font-size: 1.475em">Price: &#8377;{{i[6]}}/-</p>
+          {% else %}
+          <!-- recycling product -->
+          <p class="text-success m-0">{{ i[7] }}</p>
+          <p class="text-primary m-0">uploaded by : {{i[1]}}</p>
+
+          {% endif %}
+        </a>
+        {% if current_user.category == "buyer" and i[4] != 'Recycling'%}
+        <form action="/addToCart/{{i[0]}}" method="post" class="mt-auto">
+          <input type="hidden" value="1" name="quantity" />
+          <button type="submit">Add to Cart</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
+<script src="{{ url_for('static',filename='sidebars.js') }} "></script>
+
+<!-- welcome modal script -->
+<script>
+  const welcomeModalDiv = document.getElementById("welcomeModal");
+
+  if (welcomeModalDiv) {
+    const welcomeModal = new bootstrap.Modal(welcomeModalDiv);
+    welcomeModal.show();
+  }
+</script>
+
+{% endblock %}

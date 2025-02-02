@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            border-radius: 2px;
+            box-shadow: 0 3px 15px rgba(15, 14, 14, 0.1);
+            padding: 60px;
+            width: 300px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .notification {
+            margin-top: 35px;
+            text-align: center;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="loginForm" onsubmit="return handleLogin(event);">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const notification = document.getElementById('notification');
+
+            // Email validation
+            const isValidEmail = validateEmail(email);
+            // Password validation
+            const isValidPassword = validatePassword(password);
+
+            if (!isValidEmail) {
+                notification.innerText = 'Please enter a valid email address.';
+                notification.style.color = 'red';
+                return false; // Prevent login
+            }
+
+            if (!isValidPassword) {
+                notification.innerText = 'Password must contain at least one uppercase letter, one number, and one symbol.';
+                notification.style.color = 'red';
+                return false; // Prevent login
+            }
+
+            // If both validations pass
+            notification.innerText = 'Login successful!';
+            notification.style.color = 'green';
+            // Optionally, you could clear the form
+            document.getElementById('loginForm').reset();
+        }
+
+        function validateEmail(email) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex pattern
+            return emailPattern.test(email);
+        }
+
+        function validatePassword(password) {
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password); // Adjust symbols as needed
+
+            return hasUpperCase && hasNumber && hasSymbol;
+        }
+    </script>
+</body>
+</html>
